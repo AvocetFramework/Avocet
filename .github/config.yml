@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "🛡️ Security Incident Advisory"
+    url: "https://github.com"
+    about: "If you have discovered a critical memory exploit or privilege ring breakout, click here to view safe reporting protocols."
+  - name: "📜 Project Workspace Contribution Guidelines"
+    url: "https://github.com"
+    about: "Review code styles and environment setup parameters before working on changes."
