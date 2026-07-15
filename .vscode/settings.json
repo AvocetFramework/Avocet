@@ -1,0 +1,12 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/python/lib",
+        "${workspaceFolder}/python/desktop",
+        "${workspaceFolder}/build"
+    ],
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/python/lib",
+        "${workspaceFolder}/python/desktop",
+        "${workspaceFolder}/build"
+    ]
+}
