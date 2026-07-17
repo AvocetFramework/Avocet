@@ -6,7 +6,7 @@ A custom, freestanding 32-bit operating system kernel and high-fidelity desktop 
 
 - **Freestanding Kernel Core**: Implements a dedicated MBR bootloader, Global Descriptor Table (GDT), Interrupt Descriptor Table (IDT), 2-level paging Virtual Memory Manager (VMM), and a dynamic kernel heap allocator.
 - **Embedded Python Subsystem**: Links low-level C hardware graphics, clock timers, and keyboard interrupt streams directly to a Python runtime environment using a native C extension bridge (`avocet_core`).
-- **`avocet` UI Toolkit Clone**: A modular, object-oriented user interface framework that handles geometry mapping, alignment calculations, and Ubuntu/Fedora color palettes.
+- **`avocet` UI Toolkit Clone**: A modular, object-oriented user interface framework that handles geometry mapping, alignment calculations, and Linux color palettes.
 - **Dual-OS Backend Terminal**: A hybrid terminal console matching command syntaxes from both Linux (`ls`, `clear`, `cat`) and Windows (`dir`, `cls`, `type`).
 - **Rich Utility Ecosystem**: Features a standalone text-based HTML browser, markdown text editors, process task managers, and bot-driven desktop leisure games.
 
@@ -33,17 +33,8 @@ pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mi
 
 Avocet employs a decentralized build system. Run compilation targets directly from the root workspace folder:
 
-### 1. Boot the Bare-Metal C Kernel in QEMU
 ```bash
 make run
-```
-
-### 2. Launch the High-Fidelity Python Desktop Simulator
-```bash
 make desktop
-```
-
-### 3. Clean All Build Artifacts
-```bash
 make clean
 ```
