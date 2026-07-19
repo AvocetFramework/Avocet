@@ -1,6 +1,6 @@
-# Avocet Framework
+# 🐦 Avocet Framework
 
-A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream Linux distributions like Ubuntu and Fedora, Avocet implements its own user-space shell, system utilities, and games using a custom lightweight graphical toolkit clone—named `avocet`—drawing inspiration from both `tkinter` and `customtkinter`.
+A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream distributions like Ubuntu and Debian, Avocet implements its own user-space shell, system utilities, and games. These run on top of a custom, lightweight graphical toolkit named `avocet`, drawing inspiration from both `tkinter` and `customtkinter`.
 
 ## 🚀 Key Architectural Features
 
@@ -12,26 +12,66 @@ A custom, freestanding 32-bit operating system kernel and high-fidelity desktop 
 
 ## 📂 Repository Structure
 
+Avocet uses an organized architecture that cleanly separates the OS foundation (kernel and shell) from the application layers (Python-based utilities and UI).
+
 ```text
 Avocet/
-├── kernel/       # Freestanding x86 C kernel & bootloader
-├── shell/        # Dual-OS backend command parsing engine & Python terminal frontend
-├── python/       # Python C embedding engine host & 'avocet' toolkit library
-├── utilities/    # System tools, content editors, and retro games
-└── Makefile      # Master orchestration build script
+├── .github/
+├── .vscode/
+├── kernel/                 # Freestanding x86 C kernel & bootloader
+│   ├── boot/
+│   ├── cpu/
+│   ├── drivers/
+│   ├── memory/
+│   ├── include/
+│   ├── Makefile
+|   ├── kprint.c
+|   ├── link.ld
+|   └── main.c
+├── python/                 # Python C embedding engine host & 'avocet' toolkit library
+│   ├── desktop/
+│   ├── lib/
+│   ├── src/
+│   └── Makefile
+├── shell/                  # Dual-OS command parsing engine & Python terminal frontend
+│   ├── include/
+│   ├── src/
+│   ├── terminal.py
+│   └── Makefile
+├── utilities/              # System tools, content editors, and retro games
+│   ├── editors/
+│   ├── games/
+│   ├── system/
+│   └── Makefile
+└── Makefile                # Master orchestration build script
 ```
 
 ## 🛠️ Prerequisites & Installation
 
-To compile the repository on a Windows host, the **MSYS2 MinGW64** environment is highly recommended. For complete environment setup instructions and downloads, visit the [MSYS2 Official Website](https://msys2.org). 
+### Windows Hosts
+The **MSYS2 MinGW64** environment is highly recommended to compile this repository on Windows. 
 
-Once installed, open your MSYS2 MinGW64 terminal and install the required compiler tools and dependencies:
+1. Download and install from the [MSYS2 Official Website](https://msys2.org).
+2. Open your MSYS2 MinGW64 terminal.
+3. Install the required compiler tools and dependencies:
 
 ```bash
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
+pacman -S --needed base-devel \
+  mingw-w64-x86_64-toolchain \
   mingw-w64-x86_64-gcc \
   mingw-w64-x86_64-python \
   mingw-w64-x86_64-qemu
+```
+
+### Linux Hosts
+Alternatively, for Debian/Ubuntu-based Linux distributions, install the standard GNU toolchain, Python development headers, and QEMU:
+
+```bash
+sudo apt update && sudo apt install -y \
+  build-essential \
+  gcc \
+  python3-dev \
+  qemu-system-x86
 ```
 
 ## 💻 Building and Running
@@ -39,7 +79,12 @@ pacman -S --needed base-devel mingw-w64-x86_64-toolchain \
 Avocet employs a decentralized build system with a primary `Makefile` centralized at the root. Run compilation targets directly from your workspace root:
 
 ```bash
+# Build the entire framework and boot the OS in QEMU
 make run
+
+# Build only the desktop environment
 make desktop
+
+# Remove compiled binaries and artifacts
 make clean
 ```
