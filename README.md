@@ -1,6 +1,6 @@
 # Avocet Framework
 
-A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream Linux distributions like Ubuntu and Fedora, Avocet implements its own user-space shell, system utilities, and games using a custom lightweight graphical toolkit clone named `avocet`.
+A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream Linux distributions like Ubuntu and Fedora, Avocet implements its own user-space shell, system utilities, and games using a custom lightweight graphical toolkit clone, inspired in both `tkinter` and `customtkinter`, named `avocet`.
 
 ## 🚀 Key Architectural Features
 
@@ -26,12 +26,14 @@ Avocet/
 To compile the repository on a Windows host using the **MSYS2 MinGW64** environment, open your terminal and install the required compiler tools and dependencies:
 
 ```bash
-pacman -S --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-python mingw-w64-x86_64-qemu
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+pacman -S --needed base-devel mingw-w64-x86_64-gcc
+pacman -S --needed base-devel mingw-w64-x86_64-python mingw-w64-x86_64-qemu
 ```
 
 ## 💻 Building and Running
 
-Avocet employs a decentralized build system. Run compilation targets directly from the root workspace folder:
+Avocet employs a decentralized build system, using a Makefile centralized for each folder. Run compilation targets directly from the root workspace folder:
 
 ```bash
 make run
