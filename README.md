@@ -1,6 +1,8 @@
 # 🐦 Avocet Framework
 
-A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream distributions like Ubuntu and Debian, Avocet implements its own user-space shell, system utilities, and games. These run on top of a custom, lightweight graphical toolkit named `avocet`, drawing inspiration from both `tkinter` and `customtkinter`.
+A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. 
+
+Inspired by the premium aesthetics of mainstream distributions like Ubuntu and Fedora, Avocet implements its own user-space shell, system utilities, and games. These run on top of a custom, lightweight graphical toolkit named `avocet`, drawing inspiration from both `tkinter` and `customtkinter`.
 
 ## 🚀 Key Architectural Features
 
@@ -24,10 +26,7 @@ Avocet/
 │   ├── drivers/
 │   ├── memory/
 │   ├── include/
-│   ├── Makefile
-|   ├── kprint.c
-|   ├── link.ld
-|   └── main.c
+│   ├── Makefile, kprint.c, link.ld, main.c
 ├── python/                 # Python C embedding engine host & 'avocet' toolkit library
 │   ├── desktop/
 │   ├── lib/
@@ -49,30 +48,35 @@ Avocet/
 ## 🛠️ Prerequisites & Installation
 
 ### Windows Hosts
-The **MSYS2 MinGW64** environment is highly recommended to compile this repository on Windows. 
+Compilation on Windows requires **MSYS2**. Download and install it from the [MSYS2 Official Website](https://msys2.org). 
 
-1. Download and install from the [MSYS2 Official Website](https://msys2.org).
-2. Open your MSYS2 MinGW64 terminal.
-3. Install the required compiler tools and dependencies:
+Depending on your target architecture and preferred compiler toolchain, open the corresponding MSYS2 shell terminal and execute the matching package installation command (You can check more installation methods at DOCS.md.):
 
+#### 🟩 UCRT64 (Recommended Default)
+Modern Windows environment using the Universal C Runtime (UCRT) and GCC.
 ```bash
 pacman -S --needed base-devel \
-  mingw-w64-x86_64-toolchain \
-  mingw-w64-x86_64-gcc \
-  mingw-w64-x86_64-python \
-  mingw-w64-x86_64-qemu
+  mingw-w64-ucrt-x86_64-toolchain \
+  mingw-w64-ucrt-x86_64-gcc \
+  mingw-w64-ucrt-x86_64-python \
+  mingw-w64-ucrt-x86_64-qemu
 ```
 
 ### Linux Hosts
-Alternatively, for Debian/Ubuntu-based Linux distributions, install the standard GNU toolchain, Python development headers, and QEMU:
+Select the command block that matches your Linux distribution to install the required GNU toolchain, 32-bit cross-compilers, Python development packages, and QEMU system emulators. You can check more installation methods at DOCS.md.
 
+#### 📦 Debian / Ubuntu / Linux Mint
 ```bash
 sudo apt update && sudo apt install -y \
   build-essential \
-  gcc \
+  gcc-multilib \
+  g++-multilib \
   python3-dev \
-  qemu-system-x86
+  qemu-system-x86 \
+  nasm
 ```
+
+> **Note on 32-bit compilation:** Because Avocet is a freestanding 32-bit kernel, Linux hosts require 32-bit development libraries (e.g., `multilib-devel` or `gcc-multilib`) to successfully resolve 32-bit compilation flags like `-m32` if you choose to build locally instead of using a cross-compiler toolchain.
 
 ## 💻 Building and Running
 
