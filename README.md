@@ -1,104 +1,94 @@
-# 📖 Avocet Framework Setup & Troubleshooting Guide
+# 🐦 Avocet Framework
 
-This document provides exhaustive installation workflows for all supported operating systems, details target environments, and lists troubleshooting steps for common compilation, linking, and emulator failures.
+A custom, freestanding 32-bit operating system kernel and high-fidelity desktop ecosystem that bridges low-level C architecture with an embedded Python user space. Inspired by the premium aesthetics of mainstream distributions like Ubuntu and Fedora, Avocet implements its own user-space shell, system utilities, and games. These run on top of a custom, lightweight graphical toolkit named `avocet`, drawing inspiration from both `tkinter` and `customtkinter`.
 
-## 🛠️ Complete Installation Methods
+## 🚀 Key Architectural Features
 
-### 🍎 macOS (via Homebrew)
-Compilation on macOS requires the **Homebrew** package manager. Download and install it from the [Homebrew Official Website](https://brew.sh). Once installed, open your terminal (Terminal or iTerm2) and execute the commands below.
+- **Freestanding Kernel Core**: Implements a dedicated MBR bootloader, Global Descriptor Table (GDT), Interrupt Descriptor Table (IDT), 2-level paging Virtual Memory Manager (VMM), and a dynamic kernel heap allocator.
+- **Embedded Python Subsystem**: Links low-level C hardware graphics, clock timers, and keyboard interrupt streams directly to a Python runtime environment using a native C extension bridge (`avocet_core`).
+- **`avocet` UI Toolkit Clone**: A modular, object-oriented user interface framework that handles geometry mapping, alignment calculations, and standard desktop color palettes.
+- **Dual-OS Backend Terminal**: A hybrid terminal console matching command syntaxes from both Linux (`ls`, `clear`, `cat`) and Windows (`dir`, `cls`, `type`).
+- **Rich Utility Ecosystem**: Features a standalone text-based HTML browser, markdown text editors, process task managers, and bot-driven desktop leisure games.
 
-#### 🍏 Native Intel or Apple Silicon Setup
-Because macOS Catalina and later do not support 32-bit local compilation, macOS hosts require an x86_64 cross-compiler toolchain to build the freestanding 32-bit kernel.
+## 📂 Repository Structure
 
-```bash
-# Update Homebrew repository
-brew update
+Avocet uses an organized architecture that cleanly separates the OS foundation (kernel and shell) from the application layers (Python-based utilities and UI).
 
-# Install basic development tools, Python, assembler, and emulator
-brew install \
-  make \
-  nasm \
-  python3 \
-  qemu
-
-# Install the GNU cross-compiler toolchain for 32-bit x86 targets
-brew install x86_64-elf-gcc
+```text
+Avocet/
+├── .github/
+├── .vscode/
+├── kernel/                 # Freestanding x86 C kernel & bootloader
+│   ├── boot/
+│   ├── cpu/
+│   ├── drivers/
+│   ├── memory/
+│   ├── include/
+│   └── Makefile, kprint.c, link.ld, main.c
+├── python/                 # Python C embedding engine host & 'avocet' toolkit library
+│   ├── desktop/
+│   ├── lib/
+│   ├── src/
+│   └── Makefile
+├── shell/                  # Dual-OS command parsing engine & Python terminal frontend
+│   ├── include/
+│   ├── src/
+│   ├── terminal.py
+│   └── Makefile
+├── utilities/              # System tools, content editors, and retro games
+│   ├── editors/
+│   ├── games/
+│   ├── system/
+│   └── Makefile
+└── Makefile                # Master orchestration build script
 ```
 
-> **Note for Apple Silicon (M1/M2/M3/M4) Users**: QEMU will seamlessly handle cross-architecture translation from your ARM64 hardware to the target 32-bit x86 environment. Ensure your local `Makefile` points to `x86_64-elf-gcc` and `x86_64-elf-ld` instead of the host `gcc` or `clang`.
+## 🛠️ Prerequisites & Installation
 
----
+### 🍎 macOS Hosts
 
-### 🪟 Windows (via MSYS2)
-First, download and install the core installer from the [MSYS2 Official Website](https://msys2.org). Launch the specific environment terminal shell matching your architectural choice below to run the package manager.
+Compilation on macOS requires the **Homebrew** package manager. Download and install it from the [Homebrew Official Website](https://brew.sh). Once installed, open your terminal (Terminal or iTerm2) and execute the following commands to install the required GNU toolchain, 32-bit compilation dependencies, Python, NASM, and QEMU:
 
-#### 🟩 UCRT64 Environment (Recommended Default)
-Modern Windows environment utilizing the Universal C Runtime and GCC.
 ```bash
-pacman -S --needed base-devel \
+# Install dependencies
+brew install \
+  gcc \
+  python3 \
+  qemu \
+  nasm \
+  make
+
+# (Optional for Apple Silicon Macs): Avocet is a 32-bit x86 OS, so you may require x86_64 architecture 
+# emulation libraries if building locally on an M1/M2/M3 Mac
+```
+
+> **Note for macOS users**: Due to macOS Catalina and later dropping 32-bit environment support entirely, you must use a cross-compiler or a virtualized x86 environment to compile the freestanding 32-bit kernel properly.
+
+### Windows Hosts
+
+Compilation on Windows requires **MSYS2**. Download and install it from the [MSYS2 Official Website](https://msys2.org). Depending on your target architecture and preferred compiler toolchain, open the corresponding MSYS2 shell terminal and execute the matching package installation command (You can check more installation methods at DOCS.md.):
+
+#### 🟩 UCRT64 (Recommended Default)
+Modern Windows environment using the Universal C Runtime (UCRT) and GCC.
+
+```bash
+pacman "-S" --needed base-devel \
   mingw-w64-ucrt-x86_64-toolchain \
   mingw-w64-ucrt-x86_64-gcc \
   mingw-w64-ucrt-x86_64-python \
   mingw-w64-ucrt-x86_64-qemu
 ```
 
-#### 🟦 CLANG64 Environment
-Modern native LLVM/Clang-focused toolchain using UCRT.
-```bash
-pacman -S --needed base-devel \
-  mingw-w64-clang-x86_64-toolchain \
-  mingw-w64-clang-x86_64-clang \
-  mingw-w64-clang-x86_64-python \
-  mingw-w64-clang-x86_64-qemu
-```
+> **Note for Windows users**: There are other ways to compile the framework on a Windows environment, such as using Chocolatey, but we prefer MSYS2 for its simplicity and versatility across different development versions.
 
-#### 🟨 MINGW64 Environment
-Legacy native 64-bit environment using MSVCRT.
-```bash
-pacman -S --needed base-devel \
-  mingw-w64-x86_64-toolchain \
-  mingw-w64-x86_64-gcc \
-  mingw-w64-x86_64-python \
-  mingw-w64-x86_64-qemu
-```
+### Linux Hosts
 
-#### 🟧 MINGW32 Environment
-Legacy native 32-bit environment using MSVCRT.
-```bash
-pacman -S --needed base-devel \
-  mingw-w64-i686-toolchain \
-  mingw-w64-i686-gcc \
-  mingw-w64-i686-python \
-  mingw-w64-i686-qemu
-```
-
-#### 🟪 CLANGARM64 Environment
-Native LLVM/Clang environment targeted for Windows on ARM hardware (Qualcomm Snapdragon, etc.).
-```bash
-pacman -S --needed base-devel \
-  mingw-w64-clang-aarch64-toolchain \
-  mingw-w64-clang-aarch64-clang \
-  mingw-w64-clang-aarch64-python \
-  mingw-w64-clang-aarch64-qemu
-```
-
-#### 🟥 MSYS2 General Environment
-POSIX-emulated fallback environment. Note that applications built here rely on `msys-2.0.dll` and are not fully native Windows binaries.
-```bash
-pacman -S --needed base-devel \
-  gcc \
-  python3 \
-  qemu
-```
-
----
-
-### 🐧 Linux Environments
-Because Avocet targets a freestanding 32-bit architecture, 64-bit Linux distributions must install multilib development tools to properly handle the `-m32` flags during compilation.
+Select the command block that matches your Linux distribution to install the required GNU toolchain, 32-bit cross-compilers, Python development packages, and QEMU system emulators. You can check more installation methods at DOCS.md.
 
 #### 📦 Debian / Ubuntu / Linux Mint
+
 ```bash
-sudo apt update && sudo apt install -y \
+sudo apt update && sudo apt install "-y" \
   build-essential \
   gcc-multilib \
   g++-multilib \
@@ -107,107 +97,12 @@ sudo apt update && sudo apt install -y \
   nasm
 ```
 
-#### ⚙️ Fedora / RHEL / CentOS
-```bash
-sudo dnf groupinstall -y "Development Tools" && sudo dnf install -y \
-  glibc-devel.i686 \
-  libgcc.i686 \
-  python3-devel \
-  qemu-system-x86 \
-  nasm
-```
+> **Note on 32-bit compilation:** Because Avocet is a freestanding 32-bit kernel, Linux hosts require 32-bit development libraries (e.g., `multilib-devel` or `gcc-multilib`) to successfully resolve 32-bit compilation flags like `-m32` if you choose to build locally instead of using a cross-compiler toolchain.
 
-#### 🏔️ Arch Linux / Manjaro
-Ensure your `/etc/pacman.conf` has the `[multilib]` repository enabled before running:
-```bash
-sudo pacman -Syy --needed \
-  base-devel \
-  multilib-devel \
-  python \
-  qemu-system-x86 \
-  nasm
-```
+## 💻 Building and Running
 
-#### 🦎 openSUSE Tumbleweed / Leap
-```bash
-sudo zypper refresh && sudo zypper install -t pattern devel_basis && sudo zypper install -y \
-  glibc-devel-32bit \
-  python3-devel \
-  qemu-x86 \
-  nasm
-```
+Avocet employs a decentralized build system with a primary `Makefile` centralized at the root. Run compilation targets directly from your workspace root:
 
-
-## 🔍 Troubleshooting & Resolution
-
-### 1. Toolchain & Compilation Failures
-
-#### ❌ Error: `sys/cdefs.h: No such file or directory` or missing 32-bit headers
-* **Cause**: Your 64-bit Linux host environment is missing the multi-architecture development libraries required to build 32-bit targets.
-* **Fix**: Re-run your distribution package installation command and explicitly verify that `gcc-multilib` (Debian/Ubuntu), `glibc-devel.i686` (Fedora), or `multilib-devel` (Arch) successfully installed.
-
-#### ❌ Error: `nasm: command not found`
-* **Cause**: The Netwide Assembler is missing from the environment path, preventing assembly of the MBR bootloader code.
-* **Fix**: Install `nasm` using your specific host OS package manager listed above.
-
-#### ❌ Error: `Python.h: No such file or directory`
-* **Cause**: The C compilation stage for the embedded engine cannot locate the Python framework header files.
-* **Fix**: 
-  * **Linux**: Ensure you installed the development flavor of Python (`python3-dev` on Debian/Ubuntu or `python3-devel` on Fedora).
-  * **Windows**: If using MSYS2, make sure you launched the exact terminal corresponding to your installed package prefix (e.g., UCRT64 shell for UCRT packages).
-  * **macOS**: Provide the explicit header search path to your Makefile by finding your Homebrew Python include path:
-    ```bash
-    export CFLAGS="\(CFLAGS -I\)(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))')"
-    ```
-
-#### ❌ Error: `unknown target triple 'i386-unknown-unknown'` or target errors on macOS
-* **Cause**: The default Apple Clang compiler toolchain does not natively support targeting freestanding x86 32-bit ELF binaries.
-* **Fix**: Ensure you have installed `x86_64-elf-gcc` via Homebrew and update your `Makefile` variables to explicitly reference the cross-compiler toolchain:
-  ```makefile
-  CC = x86_64-elf-gcc
-  LD = x86_64-elf-ld
-  ```
-
----
-
-### 2. Linking Errors
-
-#### ❌ Error: `i386 architecture of input file is incompatible with i386:x86-64 output`
-* **Cause**: The linker is trying to combine the freestanding 32-bit assembly/C kernel objects into a host-native 64-bit binary layout.
-* **Fix**: Explicitly pass `-m elf_i386` to your `ld` linker arguments inside the `kernel/Makefile`. Ensure your C compiler flags utilize `-m32`.
-
-#### ❌ Error: Undefined reference to standard library symbols (e.g., `memset`, `memcpy`, `malloc`)
-* **Cause**: The kernel is compiled with `-ffreestanding`, meaning standard host C libraries are excluded.
-* **Fix**: Ensure that custom, low-level implementations for basic operations are linked inside the `kernel/memory/` directory. Do not use standard host headers inside freestanding source paths.
-
----
-
-### 3. Emulator & Virtualization Errors (QEMU)
-
-#### ❌ Error: QEMU boots to a black screen or hangs at `Booting from Hard Disk...`
-* **Cause**: The compiled kernel exceeded the size boundaries expected by the early sector bootloader, or the MBR magic signature (`0xAA55`) is misaligned.
-* **Fix**: Check `kernel/link.ld` to ensure sections map correctly. Run `make clean && make run` to clear corrupt artifacts.
-
-#### ❌ Error: `Could not initialize SDL / GTK / Display output`
-* **Cause**: QEMU is running inside a headless environment, an SSH session without graphical display forwarding, or a macOS terminal without Cocoa/SDL integration.
-* **Fix**: Append a fallback display argument to your QEMU execution line inside the root `Makefile`:
-  ```bash
-  qemu-system-x86_64 -drive format=raw,file=avocet.bin -display sdl
-  ```
-  On macOS hosts, you can fall back to standard Cocoa rendering:
-  ```bash
-  qemu-system-x86_64 -drive format=raw,file=avocet.bin -display cocoa
-  ```
-  If working completely headless, use `-nographic` or `-vnc :1` to interact via a network client.
-
-#### ❌ Error: `KVM: Failed to initialize / Permission Denied`
-* **Cause**: Your Linux user account lacks direct read/write privileges to the hardware acceleration node `/dev/kvm`, or you are running on a Windows/macOS host where KVM does not exist.
-* **Fix**: 
-  * **Linux**: Append your user to the KVM group, then log out and back in: `sudo usermod -aG kvm \$USER`
-  * **Windows/macOS**: Remove the `-enable-kvm` acceleration flag from your `Makefile` or substitute it with `-accel hvf` (Hypervisor.framework) on macOS if targeting a native host architecture configuration.
-
-## Running Avocet Framework
-To run the Avocet Framework, simply run the commands below on the root directory:
 ```bash
 # Build the entire framework and boot the OS in QEMU
 make run
