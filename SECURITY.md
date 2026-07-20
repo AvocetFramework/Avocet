@@ -6,7 +6,7 @@ This document outlines the security procedures, supported versions, and vulnerab
 
 ## Supported Versions
 
-Only the latest commit on the main development branch is actively supported and maintained with security updates. 
+Only the latest commit on the main development branch is actively supported and maintained with security updates. A new version of the software is published after every one month, each with twelve versions, so the software must be kept under update every at least one year.
 
 | Version | Supported |
 | :--- | :--- |
