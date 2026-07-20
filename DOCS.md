@@ -163,3 +163,16 @@ sudo zypper refresh && sudo zypper install -t pattern devel_basis && sudo zypper
   ```bash
   sudo usermod -aG kvm \$USER
   ```
+
+## Running Avocet Framework
+To run the Avocet Framework, simply run the commands below on the root directory:
+```bash
+# Build the entire framework and boot the OS in QEMU
+make run
+
+# Build only the desktop environment
+make desktop
+
+# Remove compiled binaries and artifacts
+make clean
+```
