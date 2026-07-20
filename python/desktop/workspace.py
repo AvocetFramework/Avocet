@@ -13,7 +13,7 @@ class AvocetDesktop:
         self.system_label = Label(2, 4, "Avocet OS")
         self.version_label = Label(60, 4, "v0.1.0")
         
-        self.main_window = Window(30, 40, 45, 18, "Terminal", 0x000000)
+        self.main_window = Window(30, 40, 45, 18)
 
     def render(self):
         avocet_core.draw_rect(0, 0, 80, 25, self.background_color)
