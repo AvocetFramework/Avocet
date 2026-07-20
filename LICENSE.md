@@ -9,13 +9,13 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-### 1. NOTICES AND ATTRIBUTIONS
+### 1. Notices and Attributions
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software. If you modify any files, you 
 must cause the modified files to carry prominent notices stating that you 
 changed the files.
 
-### 2. GRANT OF PATENT LICENSE
+### 2. Grant of Patent License
 Subject to the terms and conditions of this License, each contributor hereby
 grants to you a perpetual, worldwide, non-exclusive, no-charge, royalty-free,
 irrevocable patent license to make, have made, use, offer to sell, sell,
@@ -30,13 +30,13 @@ incorporated within the Software constitutes direct or contributory patent
 infringement, then any patent licenses granted to you under this License for
 the Software shall terminate as of the date such litigation is filed.
 
-### 3. TRADEMARK RESTRICTION
+### 3. Trademark Restriction
 This License does not grant permission to use the trade names, trademarks,
 service marks, or product names of the Licensor, except as required for 
 reasonable and customary use in describing the origin of the work and 
 reproducing the content of the copyright notice.
 
-### 4. DISCLAIMER OF WARRANTY
+### 4. Disclaimer of Warranty
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,7 +45,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-### 5. LIMITATION OF LIABILITY
+### 5. Limitation of Liability
 IN NO EVENT AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE),
 CONTRACT, OR OTHERWISE, UNLESS REQUIRED BY APPLICABLE LAW (SUCH AS DELIBERATE
 AND GROSSLY NEGLIGENT ACTS) OR AGREED TO IN WRITING, SHALL ANY CONTRIBUTOR BE
