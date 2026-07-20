@@ -1,0 +1,6 @@
+# Configuration rules for stale issues and automated repository interactions
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Confidential Security Disclosures
+    url: https://github.com
+    about: If you discovered a ring-0 sandbox escape or buffer overflow bug, please file it discretely here.

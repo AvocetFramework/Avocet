@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # Maintain underlying GitHub Action revisions automatically
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+
+  # Track Python toolchain extensions, mock layers, and script frameworks
+  - package-ecosystem: "pip"
+    directory: "/python"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

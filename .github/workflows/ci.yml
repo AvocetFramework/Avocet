@@ -1,0 +1,26 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-kernel:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install System Toolchain
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential gcc-multilib g++-multilib nasm python3-dev
+
+    - name: Run Core Code Compilation
+      run: |
+        # Verifies the master makefile runs cleanly without breaking the build
+        make clean
+        make

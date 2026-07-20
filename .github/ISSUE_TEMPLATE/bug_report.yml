@@ -1,0 +1,59 @@
+name: "🐛 Bug Report"
+description: File a structured report to help us resolve kernel crashes, compiler bugs, or UI toolkit faults.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug! Please fill out this form with as much detail as possible to help us debug low-level or user-space issues.
+  - type: dropdown
+    id: host-os
+    attributes:
+      label: Host Operating System
+      description: What system are you using to compile or run the Avocet Framework?
+      options:
+        - "macOS (Apple Silicon)"
+        - "macOS (Intel)"
+        - "Windows (MSYS2 UCRT64)"
+        - "Windows (MSYS2 Other)"
+        - "Linux (Debian/Ubuntu/Mint)"
+        - "Linux (Fedora/Arch/Other)"
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Where is the failure occurring?
+      options:
+        - "Kernel Core (Bootloader, GDT, IDT, VMM)"
+        - "Python Subsystem / avocet_core Extension"
+        - "avocet UI Toolkit / Widgets"
+        - "Shell / Terminal Frontend"
+        - "Build System / Makefile Core"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Provide a clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce & Code Snippet
+      description: Include terminal commands, Makefile arguments, or the minimal Python widget script used.
+      placeholder: |
+        1. Run 'make run'
+        2. Terminal crashes with error...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal Output / QEMU Panic Logs
+      description: Paste relevant compiler warnings, linker complaints, or emulator backtraces here.
+      render: shell

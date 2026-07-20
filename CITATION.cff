@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you reference or build upon this 32-bit operating system kernel, please cite it as below."
+authors:
+  - name: "Avocet Framework Maintainers"
+title: "Avocet: Custom 32-bit Kernel and High-Fidelity Desktop Ecosystem"
+date-released: 2026-07-20
+url: "https://github.com/AvocetFramework/Avocet"

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  compiler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: avocet-builder:latest
+    container_name: avocet_build_env
+    # Maps your local codebase into the container for live-reloading builds
+    volumes:
+      - .:/workspace
+    # Overrides default command to let you keep the container alive or run custom make jobs
+    stdin_open: true
+    tty: true

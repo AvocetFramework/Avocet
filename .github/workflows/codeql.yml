@@ -1,0 +1,49 @@
+name: "🔒 CodeQL Security Scan"
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '30 18 * * 1' # Runs every Monday at 18:30 UTC
+
+jobs:
+  analyze:
+    name: Analyze Code Integrity
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp', 'python' ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Initialize CodeQL Analysis Engine
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      # Autobuild handles Python natively; custom hook handles low-level multilib C targets
+      - name: Autobuild Languages
+        if: matrix.language == 'python'
+        uses: github/codeql-action/autobuild@v4
+
+      - name: Manual Build Hook (C Components)
+        if: matrix.language == 'cpp'
+        run: |
+          sudo apt-get update && sudo apt-get install -y build-essential gcc-multilib g++-multilib python3-dev nasm
+          make desktop
+
+      - name: Perform CodeQL Analysis Execution
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"

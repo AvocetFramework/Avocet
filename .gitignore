@@ -1,0 +1,32 @@
+# Master Build Artifact Distribution Folder
+build/
+
+# Intermediate Compiled C Objects & Assembly Binaries
+*.o
+*.bin
+*.exe
+*.out
+*.sys
+*.a
+*.so
+
+# Python Cache Matrices
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Code Editor and IDE Configurations (VS Code / PyCharm)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Local Operational Logs & System Cache
+*.log
+.DS_Store
+Thumbs.db
