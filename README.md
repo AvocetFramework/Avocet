@@ -24,7 +24,10 @@ Avocet/
 │   ├── drivers/
 │   ├── memory/
 │   ├── include/
-│   └── Makefile, kprint.c, link.ld, main.c
+│   ├── Makefile
+|   ├── kprint.c
+|   ├── link.ld
+|   └── main.c
 ├── python/                 # Python C embedding engine host & 'avocet' toolkit library
 │   ├── desktop/
 │   ├── lib/
