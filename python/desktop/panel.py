@@ -12,9 +12,15 @@ class AvocetPanel:
         self.bg_color = 0x111111
 
         self.container = Toolbar(self.x, self.y, self.width)
-        self.title_label = Label(2, 0, "Avocet OS", 0xE95420)
-        self.clock_label = Label(36, 0, "12:00", 0xFFFFFF)
-        self.mem_label = Label(62, 0, "MEM: 000M", 0xAEA79F)
+        self.title_label = Label("Avocet OS", 0xE95420)
+        self.title_label.x = 2
+        self.title_label.y = 0
+        self.clock_label = Label("12:00", 0xFFFFFF)
+        self.clock_label.x = 36
+        self.clock_label.y = 0
+        self.mem_label = Label("MEM: 000M", 0xAEA79F)
+        self.mem_label.x = 62
+        self.mem_label.y = 0
 
     def update_metrics(self):
         ticks = avocet_core.get_ticks()
