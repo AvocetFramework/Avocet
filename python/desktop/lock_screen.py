@@ -9,11 +9,17 @@ class AvocetLockScreen:
         self.panel_color = 0x111111
         self.is_locked = True
         
-        self.clock_label = Label(32, 6, "17:45", 0xFFFFFF)
-        self.date_label = Label(26, 8, "Wednesday, July 15", 0xAEA79F)
+        self.clock_label = Label("17:45", 0xFFFFFF)
+        self.clock_label.x = 32
+        self.clock_label.y = 6
+        self.date_label = Label("Wednesday, July 15", 0xAEA79F)
+        self.date_label.x = 26
+        self.date_label.y = 8
         
         self.auth_window = Window(20, 12, 40, 8, "System Authentication", 0x1E1E1E)
-        self.prompt_label = Label(22, 14, "Password for root:", 0xFFFFFF)
+        self.prompt_label = Label("Password for root:", 0xFFFFFF)
+        self.prompt_label.x = 22
+        self.prompt_label.y = 14
         self.input_box = Window(22, 16, 36, 1, "", 0x000000)
         self.login_button = Button(34, 18, 12, 1, "Unlock", 0xE95420, 0xFFFFFF)
         
