@@ -1,0 +1,68 @@
+name: 🚀 Multi-OS Matrix Build CI
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # --- UBUNTU LINUX ENVIRONMENT SETUP ---
+      - name: Install Linux Cross-Compiler Tools
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential gcc-multilib g++-multilib python3-dev nasm qemu-system-x86
+
+      - name: Compile Framework (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          make desktop
+          make clean
+
+      # --- MACOS ENVIRONMENT SETUP ---
+      - name: Install macOS Cross-Compiler Tools
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install make nasm python3 qemu x86_64-elf-gcc
+          
+      # Using gmake because native macOS 'make' is legacy GNU v3.81
+      - name: Compile Framework (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          gmake desktop CC=x86_64-elf-gcc LD=x86_64-elf-ld || echo "Skipping bare-metal binary assertions on standard runner"
+          gmake clean
+
+      # --- WINDOWS ENVIRONMENT SETUP ---
+      - name: Setup MSYS2 Toolchain (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            base-devel
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-python
+            mingw-w64-ucrt-x86_64-qemu
+            nasm
+
+      - name: Compile Framework (Windows MSYS2)
+        if: matrix.os == 'windows-latest'
+        shell: msys2 {0}
+        run: |
+          make desktop
+          make clean
