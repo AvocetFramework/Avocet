@@ -21,7 +21,7 @@ class AvocetLockScreen:
         self.prompt_label.x = 22
         self.prompt_label.y = 14
         self.input_box = Window(22, 16, 36, 1)
-        self.login_button = Button(34, 18, 12, 1, "Unlock", 0xE95420, 0xFFFFFF)
+        self.login_button = Button(34, 18, 12, 1, "Unlock")
         
         self.password_buffer = ""
 
