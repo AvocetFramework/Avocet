@@ -46,7 +46,7 @@ Avocet/
 └── Makefile                # Master orchestration build script
 ```
 
-## 🛠️ Prerequisites & Installation
+## Prerequisites & Installation
 
 ### macOS Hosts
 
