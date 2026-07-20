@@ -16,7 +16,7 @@ class AvocetLockScreen:
         self.date_label.x = 26
         self.date_label.y = 8
         
-        self.auth_window = Window(20, 12, 40, 8, "System Authentication", 0x1E1E1E)
+        self.auth_window = Window(20, 12, 40, 8)
         self.prompt_label = Label("Password for root:", 0xFFFFFF)
         self.prompt_label.x = 22
         self.prompt_label.y = 14
@@ -31,7 +31,9 @@ class AvocetLockScreen:
         self.clock_label.update()
         self.date_label.update()
         
+        avocet_core.draw_rect(20, 12, 40, 8, self.panel_color)
         self.auth_window.update()
+        avocet_core.kprint("System Authentication")
         self.prompt_label.update()
         self.input_box.update()
         
