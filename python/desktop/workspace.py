@@ -7,8 +7,12 @@ class AvocetDesktop:
         self.background_color = 0x2C001E
         self.panel_color = 0x111111
         
-        self.top_bar = Toolbar(0, 0, 80, 24, self.panel_color)
-        self.side_dock = Toolbar(0, 24, 24, 25, self.panel_color)
+        self.top_bar = Toolbar(0, 0, 80)
+        self.top_bar.height = 24
+        self.top_bar.color = self.panel_color
+        self.side_dock = Toolbar(0, 24, 24)
+        self.side_dock.height = 25
+        self.side_dock.color = self.panel_color
         
         self.system_label = Label(2, 4, "Avocet OS")
         self.version_label = Label(60, 4, "v0.1.0")
