@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Initialize CodeQL Analysis Engine
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
@@ -35,7 +35,7 @@ jobs:
       # Autobuild handles Python natively; custom hook handles low-level multilib C targets
       - name: Autobuild Languages
         if: matrix.language == 'python'
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@v4
 
       - name: Manual Build Hook (C Components)
         if: matrix.language == 'cpp'
@@ -44,6 +44,6 @@ jobs:
           make desktop
 
       - name: Perform CodeQL Analysis Execution
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{matrix.language}}"
