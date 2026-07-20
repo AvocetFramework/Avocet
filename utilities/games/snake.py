@@ -10,9 +10,9 @@ class AvocetSnake:
         self.game_over = False
 
     def handle_keypress(self, key):
-        if key in ['w', 'W'] and self.direction !=: self.direction = [0, -1]
+        if key in ['w', 'W'] and self.direction != [0, 1]: self.direction = [0, -1]
         elif key in ['s', 'S'] and self.direction != [0, -1]: self.direction = [0, 1]
-        elif key in ['a', 'A'] and self.direction !=: self.direction = [-1, 0]
+        elif key in ['a', 'A'] and self.direction != [1, 0]: self.direction = [-1, 0]
         elif key in ['d', 'D'] and self.direction != [-1, 0]: self.direction = [1, 0]
 
     def update(self):
